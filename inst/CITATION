@@ -1,0 +1,17 @@
+
+citHeader("To cite tfse use:")
+
+citEntry(
+    entry        = "Manual",
+    title        = "tfse: Various Useful Functions",
+    author       = as.person("Michael W. Kearney"),
+    year         = 2018,
+    note         = "R package version 0.4.1",
+    url          = "https://tfse.mikewk.com",
+    key          = "tfse-package",
+    textVersion  = paste(
+        "Kearney, M. W. (2018). tfse: Various Useful Functions.",
+        "R package version 0.4.1 Retrieved from",
+        "https://tfse.mikewk.com"
+    )
+)
