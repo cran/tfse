@@ -14,39 +14,111 @@ Various useful functions for working with data and writing functions
 
 ## Install
 
-To install the package
+Install from CRAN
 
 ``` r
-## install from github
+## from CRAN repo
+install.packages("tfse")
+```
+
+Install dev version from Github
+
+``` r
+## from github
 remotes::install_github("mkearney/tfse")
 ```
 
 ## Usage
 
-Load the package and go
+### Scales
+
+Rescale to standard (0-1) scale
 
 ``` r
-## load pkg
-library(tfse)
+## 0-1 scale
+rescale_standard(-2:2)
+#> [1] 0.00 0.25 0.50 0.75 1.00
+```
 
-## use functions like col2hex
-col2hex("greenyellow")
-#> [1] "#ADFF2F"
+Rescale to normal (mean = 0; sd = 1) scale
 
-## rescale values
-x <- sample(-10:100, 20)
+``` r
+## z scores
+rescale_normal(-2:2)
+#> [1] -1.2649111 -0.6324555  0.0000000  0.6324555  1.2649111
+```
 
-## rescale standard
-rescale_standard(x)
-#>  [1] 0.110092 0.623853 0.605505 0.614679 0.844037 0.981651 0.000000
-#>  [8] 0.220183 1.000000 0.477064 0.642202 0.495413 0.247706 0.825688
-#> [15] 0.256881 0.733945 0.899083 0.229358 0.155963 0.192661
+Rescale to arbitrary lower/upper bounds
 
-## rescale standard
-rescale_pointscale(x, 1, 10)
-#>  [1]  1.99083  6.61468  6.44954  6.53211  8.59633  9.83486  1.00000
-#>  [8]  2.98165 10.00000  5.29358  6.77982  5.45872  3.22936  8.43119
-#> [15]  3.31193  7.60550  9.09174  3.06422  2.40367  2.73394
+``` r
+## specify new scale bounds
+rescale_pointscale(-2:2, 1, 10)
+#> [1]  1.00  3.25  5.50  7.75 10.00
+```
+
+### Citations
+
+Print out the APA-formatted citation for R packages.
+
+``` r
+## print out APA citation for {rtweet}
+apa_citation("rtweet")
+#> [32m↪[39m [38;5;244mAdding APA citation of {rtweet} to clipboard![39m
+#> [1m[32m✔[39m Ready to paste![22m
+#> 
+#> Kearney, M. W. (2018). rtweet: Collecting twitter data (R package version
+#>     0.6.7) [Computer software]. The Comprehensive R Archive Network. Available
+#>     from https://cran.r-project.org/package=rtweet
+```
+
+### Annotate script files
+
+Use `box_code()` to add a header-like chunk to your clipboard–paste in
+script as desired.
+
+``` r
+## store text in clipboard
+box_code("EXAMPLE #1")
+
+## the pasted output:
+##----------------------------------------------------------------------------##
+##                                 EXAMPLE #1                                 ##
+##----------------------------------------------------------------------------##
+```
+
+### Regular expressions
+
+Get all regular expression matches (using easier
+looka-heads/look-behinds)
+
+``` r
+## some text
+x <- c("This *is* a test", 
+  "#this *was* a test", 
+  "This *will* be a test!",
+  "This *has been* a test; it *is* great.")
+
+## return text between asterisks, return as atomic vector
+regmatches_(x, "(?<=\\*)\\S[^*]+(?=\\*)", drop = TRUE)
+#> [1] "is"       "was"      "will"     "has been" "is"
+```
+
+### Github
+
+Figure out the name of a Github repo for a given package
+
+``` r
+## repo name of devtools
+desc_gh_repo("devtools")
+#> [1] "r-lib/devtools"
+```
+
+Convert a Github link to the raw URL version
+
+``` r
+## path to raw version of Github file
+github_raw("https://github.com/mkearney/driven-snow/blob/master/theme/driven-snow.rstheme")
+#> [1] "https://raw.githubusercontent.com/mkearney/driven-snow/master/theme/driven-snow.rstheme"
 ```
 
 ## Help
